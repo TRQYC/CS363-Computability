@@ -1,0 +1,92 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[usenames]{xcolor}
+%\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{mathrsfs}
+%\usepackage{float}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+\theoremstyle{definition}
+
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab12-Incompleteness}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2015}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class.}
+
+\footnotesize{\color{blue}$*$ Name:\_\_\_\_\_\_\_\_ \quad StudentId: \_\_\_\_\_\_\_\_ \quad Email: \_\_\_\_\_\_\_\_}
+\end{center}
+
+\begin{enumerate}
+  \item Write the formal counterpart of the following informal statements using the language $L$ with alphabet $\{0,1,+,\times,=\}$, logical notions $\{\neg, \vee, \wedge, \rightarrow, \forall, \exists\}$, variables, and other symbols.
+     \begin{enumerate}
+     	\item $x$ is a perfect square.
+     	\item $x$ mod $y = z$.
+     \end{enumerate}
+  \item Show that $\mathscr{F}$ is productive.
+
+  \item Effectively Recursively Inseparable
+
+    Let ($\mathscr{A},\mathscr{D}$) be a consistent recursively axiomatized formal system for which the following two properties hold:
+	\begin{enumerate}
+	\item[(1)] If $M(x_{1},\cdots,x_{n})$ is a decidable predicate, $\sigma(\textsf{x}_{1},\ldots,\textsf{x}_{n})$ is the statement of $L$ that is the formal counterpart of $M(x_1, \cdots, x_n)$, then for any $a_1, \cdots, a_n \in \mathbb{N}$,
+	\begin{enumerate}
+	\item If $M(a_{1},\cdots,a_{n})$ holds, then $\sigma(\textsf{a}_{1},\ldots,\textsf{a}_{n})$ is provable.
+	\item If $M(a_{1},\cdots,a_{n})$ does not hold, then $\neg\sigma(\textsf{a}_{1},\ldots,\textsf{a}_{n})$ is provable.
+	\end{enumerate}
+	\item[(2)]  For each natural number $n$,
+	\begin{enumerate}
+	\item If $n\in K_{0}$ then $\textsf{n}\in \textsf{K}_{0}$ is provable.
+	\item If $n\in K_{1}$ then $\textsf{n}\in \textsf{K}_{1}$ is provable.
+	\item If $\textsf{n}\in \textsf{K}_{1}$ is provable, then $\textsf{n}\notin \textsf{K}_{0}$ is also provable.
+	\end{enumerate}
+	\end{enumerate}
+	If we define $\left\{
+	\begin{array}{l}
+	Pr^{**} = \{n:\textsf{n}\in \textsf{K}_{0} \mbox{ is provable}\}, \\
+	Ref^{**}=\{n: \textsf{n}\in \textsf{K}_{0} \mbox{ is refutable}\}=\{n: \textsf{n}\notin \textsf{K}_{0}\ \mbox{ is provable}\},
+	\end{array}\right.$ then answer the following two questions.
+	\begin{enumerate}
+	\item Show that $Pr^{**}$ and $Ref^{**}$ are effectively recursively inseparable.
+	\item Let $Pr=\{n:\theta_n \mbox{ is provable}\}$ and $Ref=\{n:\neg \theta_n \mbox{ is provable}\}$. Prove that $Pr$ and $Ref$ are effectively recursively inseparable. (\emph{Hint}. Extend the idea of theorem 7-3.2 to pairs of effectively recursively inseparable sets.)
+	\end{enumerate}
+
+\end{enumerate}
+\end{document}

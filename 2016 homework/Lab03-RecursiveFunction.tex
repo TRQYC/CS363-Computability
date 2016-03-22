@@ -1,0 +1,139 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{multicol}
+
+\theoremstyle{definition}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+%changing 1.5 will give you different space between lines.
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+
+\begin{document}
+
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab03-Recursive Function}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2016}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class}
+
+\footnotesize{\color{red}$*$ If there is any problem, please contact: nongeek.zv@gmail.com }
+
+\footnotesize{\color{blue}$*$ Name:Zhang Yu Peng \quad StudentId: 5130309468 \quad Email: 845113336@qq.com}
+\end{center}
+
+
+\begin{enumerate}%[topsep=0pt, partopsep=0pt, itemsep=2pt,parsep=2pt]
+
+\item Show that the following functions are primitive recursive:
+\begin{enumerate}
+  \item $half(n)=\left\{\begin{array}{ll}
+    \dfrac{n}{2}, & \mbox{if $n$ is even,} \\
+    \dfrac{n-1}{2}, & \mbox{if $n$ is odd.} \\
+  \end{array}\right.$\\
+  \textbf{Proof}: $$half(0)=0$$.\\
+  $$half(x+1)=\left\{\begin{array}{ll}
+  \dfrac{x}{2}, & \mbox{if $x$ is even,} \\
+  \dfrac{x+1}{2}, & \mbox{if $x$ is odd.} \\
+  \end{array}\right = \left\{\begin{array}{ll}
+  half(x),   & \mbox{if $x$ is even,} \\
+  half(x)+1, & \mbox{if $x$ is odd.} \\
+  \end{array}\right $$\\
+  So, the function is primitive recursive.
+  
+  \item $\max \{x_1, x_2, \cdots, x_n \}$ = the maximum of $x_1$, $x_2$, $\cdots$, $x_n$.
+  \item $f(x)=$ the sum of all prime divisors of $x$.
+  \item $g(x)=x^x$.
+\end{enumerate}
+
+
+  \item Show the computability of the following functions by minimalisation.
+    \begin{enumerate}
+    \item $f^{-1}(x)$, if $f(x)$ is a total injective computable function.
+    \item $f(a)=\left\{\begin{array}{l}
+                       \mbox{the least non-negative integral root of } p(x)-a\ (a\in \mathbb{N}),\\
+                       \mbox{undefined if there's no such root},
+                       \end{array}\right.$  \vspace{1mm}
+
+                       where $p(x)$ is a polynomial with integer coefficients.
+    \item $f(x,y)=\left\{\begin{array}{ll}
+        x/y & \mbox{if } y\neq 0 \mbox{ and } y|x,\\
+        \mbox{undefined} & \mbox{otherwise}.
+        \end{array}\right.$
+    \end{enumerate}
+
+
+\item Let $\pi (x,y)=2^{x}(2y+1)-1$. Show that $\pi$ is a computable bijection from $\mathbb{N}^{2}$ to $\mathbb{N}$, and that the functions $\pi_{1}$, $\pi_{2}$ such that $\pi(\pi_{1}(z),\pi_{2}(z))=z$ for all $z$ are computable.
+
+
+\item Show that the following function is primitive recursive (with the help of $\pi(x,y)$, perhaps):
+\begin{eqnarray*}
+  f(0) & = & 1, \\
+  f(1) & = & 1, \\
+  f(n+2) & = & f(n) + f(n+1).
+\end{eqnarray*}
+  \item Coding Technology.
+
+  Any number $x \in \mathbb{N}$ has a unique expression as
+
+  (1) $x=\sum\limits_{i=0}^{\infty} \alpha_{i}2^{i},$ with $\alpha_{i}=0 \mbox{ or } 1,\mbox{ for all }i.$
+
+  Hence, if $x>0$, there are unique expressions for  $x$ in the forms
+
+  (2) $x=2^{b_{1}}+2^{b_{2}}+\ldots+2^{b_{l}},$ with $0\leq b_{1}<b_{2}<...<b_{l}$ and $l \geq 1$, and
+
+  (3) $x=2^{a_{1}}+2^{a_{1}+a_{2}+1}+\ldots+2^{a_{1}+a_{2}+\ldots+a_{k}+k-1}$. %{\color{blue}(a way to code sequence $(a_{1},a_{2},\ldots,a_{l})$)}
+  {\color{blue}(The expression (3) is a way of regarding $x$ as coding the sequence $(a_{1},a_{2},\ldots,a_{l})$ of numbers)}
+
+  Show that each of the functions $\alpha$, $l$, $b$, $a$ defined below is computable.
+    \begin{enumerate}
+    \item $\alpha(i,x)=\alpha_{i}$ as in the expression (1);
+    \item $l(x)=\left\{\begin{array}{ll}
+        l \mbox{ as in (2)}, & \mbox{if } x>0,\\
+        0& \mbox{otherwise};
+        \end{array}\right.$
+    \item $b(x)=\left\{\begin{array}{ll}
+        b_{i} \mbox{ as in (2)}, &\mbox{if } x>0 \mbox{ and } 1\leq i \leq l,\\
+        0& \mbox{otherwise};
+        \end{array}\right.$
+    \item $a(i,x)=\left\{\begin{array}{ll}
+        a_{i} \mbox{ as in (3)}, &\mbox{if } x>0 \mbox{ and } 1\leq i \leq l,\\
+        0& \mbox{otherwise};
+        \end{array}\right.$
+    \end{enumerate}
+
+\end{enumerate}
+
+
+%========================================================================
+\end{document}

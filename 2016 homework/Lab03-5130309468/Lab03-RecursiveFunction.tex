@@ -1,0 +1,193 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{multicol}
+
+\theoremstyle{definition}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+%changing 1.5 will give you different space between lines.
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+
+\begin{document}
+
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab03-Recursive Function}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2016}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class}
+
+\footnotesize{\color{red}$*$ If there is any problem, please contact: nongeek.zv@gmail.com }
+
+\footnotesize{\color{blue}$*$ Name:Zhang Yu Peng \quad StudentId: 5130309468 \quad Email: 845113336@qq.com}
+\end{center}
+
+
+\begin{enumerate}%[topsep=0pt, partopsep=0pt, itemsep=2pt,parsep=2pt]
+
+\item Show that the following functions are primitive recursive:
+\begin{enumerate}
+  \item $half(n)=\left\{\begin{array}{ll}
+    \dfrac{n}{2}, & \mbox{if $n$ is even,} \\
+    \dfrac{n-1}{2}, & \mbox{if $n$ is odd.} \\
+  \end{array}\right.$\\
+  
+  \textbf{Proof:}\\
+  $$half(0)=0$$\\
+  $$half(x+1)=\left\{\begin{array}{ll}
+  \dfrac{x}{2}, & \mbox{if $x$ is even,} \\
+  \dfrac{x+1}{2}, & \mbox{if $x$ is odd.} \\
+  \end{array} \right. = \left\{\begin{array}{ll}
+  half(x),   & \mbox{if $x$ is even,} \\
+  half(x)+1, & \mbox{if $x$ is odd.} \\
+  \end{array}\right. $$\\
+  So, the function is primitive recursive.
+  
+  \item $\max \{x_1, x_2, \cdots, x_n \}$ = the maximum of $x_1$, $x_2$, $\cdots$, $x_n$.\\
+  \textbf{Proof:}\\
+  For $n=2$, $\max \{x_1, x_2 \}  = x+(y \dot{-} x)$, it's computable.\\
+  Assume that for $n=k$, the function is computable, then for $n=k+1$, $\max \{x_1,...x_k,x_{k+1} \}= \max \{ \max \{ x_1,...x_k \}, x_{k+1} \} $.
+  
+  \item $f(x)=$ the sum of all prime divisors of $x$.\\
+  \textbf{Proof:}\\
+  $f(x) = \sum_{y < x+1}yPr(y)div(y,x)$, so the function is computable.\\
+  
+  \item $g(x)=x^x$.\\
+  \textbf{Proof:}\\
+  $g(x) = power(x,x)$, so the function is computable.\\
+\end{enumerate}
+
+
+  \item Show the computability of the following functions by minimalisation.
+    \begin{enumerate}
+    \item $f^{-1}(x)$, if $f(x)$ is a total injective computable function.\\
+    \textbf{Proof:}\\
+    $f^{-1}(x) = \mu y(f(y)-x=0)$\\
+    So, the function is computable.
+    
+    
+    \item $f(a)=\left\{\begin{array}{l}
+                       \mbox{the least non-negative integral root of } p(x)-a\ (a\in \mathbb{N}),\\
+                       \mbox{undefined if there's no such root},
+                       \end{array}\right.$  \vspace{1mm}
+
+                       where $p(x)$ is a polynomial with integer coefficients.\\
+   \textbf{Proof:}\\
+   $f(a)= \mu y(p(x)-a=0)$\\
+   So, the function is computable.
+                       
+    \item $f(x,y)=\left\{\begin{array}{ll}
+        x/y & \mbox{if } y\neq 0 \mbox{ and } y|x,\\
+        \mbox{undefined} & \mbox{otherwise}.
+        \end{array}\right.$\\
+   \textbf{Proof:}
+   $f(x,y)= \mu z(mult(y,z)-x=0$\\
+   So, the function is computable.
+   
+    \end{enumerate}
+
+\item Let $\pi (x,y)=2^{x}(2y+1)-1$. Show that $\pi$ is a computable bijection from $\mathbb{N}^{2}$ to $\mathbb{N}$, and that the functions $\pi_{1}$, $\pi_{2}$ such that $\pi(\pi_{1}(z),\pi_{2}(z))=z$ for all $z$ are computable.\\
+\textbf{Proof:}\\
+First, we proof the injective: suppose that $\pi(x_1,y_1)=2^{x_1}(2y_1+1)-1, \pi(x_2,y_2)=2^{x_2}(2y_2+1)-1$, when $\pi(x_1,y_1)=\pi(x_2,y_2)$, we have $2^{x_1}(2y_1+1)-1=2^{x_2}(2y_2+1)-1$, which is $\frac{2^{x_2}}{2^{x_1}}=\frac{2y_1+1}{2y_2+1}$. We can easily see that the right side of the equation is an odd number, so if the equation is right, that means $2^{x_2-x_1}$ is an odd number, so $2^{x_2-x_1}=1, x_1=x_2$, then $y_1 = y_2$. So the function is injective.\\
+Second, we proof the surjective: if $z$ is an even number, then $\pi(0,z/2)=z$ can map to $z$. if $z$ is an odd number, $z+1$ is an even number, let $2^x$ is the max number that $2^x | (z+1)$, so $\pi(x,(\frac{z+1}{2^x}-1)/2) = z$, so the function is surjective.\\
+So, the function is bijective.\\
+Third, due to the results above, we can see $\pi_1(z)=(\mu y<(z+1)(div(power(2,y),z+1)=0) \dot{-} 1)$, $\pi_2(z)=(qt(2,qt(power(2,\pi_1(z))),z+1) \dot{-} 1)$, so the function is computable.
+
+\item Show that the following function is primitive recursive (with the help of $\pi(x,y)$, perhaps):
+\begin{eqnarray*}
+  f(0) & = & 1, \\
+  f(1) & = & 1, \\
+  f(n+2) & = & f(n) + f(n+1).
+\end{eqnarray*}\\
+\textbf{Proof:}\\
+Define $g(n)=power(2,f(n))power(3,f(n+1))$ and $\pi_3(z)=(\mu y<(z+1)(div(power(3,y),z+1)=0) \dot{-} 1)$, so $f(n)=\pi_1(g(n)), f(n+1)=\pi_3(g(n))$.\\
+Then, $$g(0)=6$$
+$$g(n+1)=power(2,f(n+1))power(3,f(n+2))=power(2,f(n+1))power(3,f(n+1)+f(n))=$$
+$$power(2,\pi_3(g(n)))power(3,\pi_3(g(n))+\pi_2(g(n)))$$
+So, the function is primitive recursion.
+
+
+  \item Coding Technology.
+
+  Any number $x \in \mathbb{N}$ has a unique expression as
+
+  (1) $x=\sum\limits_{i=0}^{\infty} \alpha_{i}2^{i},$ with $\alpha_{i}=0 \mbox{ or } 1,\mbox{ for all }i.$
+
+  Hence, if $x>0$, there are unique expressions for  $x$ in the forms
+
+  (2) $x=2^{b_{1}}+2^{b_{2}}+\ldots+2^{b_{l}},$ with $0\leq b_{1}<b_{2}<...<b_{l}$ and $l \geq 1$, and
+
+  (3) $x=2^{a_{1}}+2^{a_{1}+a_{2}+1}+\ldots+2^{a_{1}+a_{2}+\ldots+a_{k}+k-1}$. %{\color{blue}(a way to code sequence $(a_{1},a_{2},\ldots,a_{l})$)}
+  {\color{blue}(The expression (3) is a way of regarding $x$ as coding the sequence $(a_{1},a_{2},\ldots,a_{l})$ of numbers)}
+
+  Show that each of the functions $\alpha$, $l$, $b$, $a$ defined below is computable.
+    \begin{enumerate}
+    \item $\alpha(i,x)=\alpha_{i}$ as in the expression (1);\\
+    \textbf{Proof:}\\
+    $\alpha(i,x) = rm(2,qt(power(2,i),x))$\\
+    So the function is computable.\\
+    \item $l(x)=\left\{\begin{array}{ll}
+        l \mbox{ as in (2)}, & \mbox{if } x>0,\\
+        0& \mbox{otherwise};
+        \end{array}\right.$\\
+    \textbf{Proof:}\\
+    $l(x)= \sum_{i < x+1}(\alpha(i,x))$\\
+    So, the function is computable.\\
+    
+    \item $b(i,x)=\left\{\begin{array}{ll}
+        b_{i} \mbox{ as in (2)}, &\mbox{if } x>0 \mbox{ and } 1\leq i \leq l,\\
+        0& \mbox{otherwise};
+        \end{array}\right.$\\
+    \textbf{Proof:}
+    $b(i,x)=  \mu z<(x+1)(\sum_{j<z+1} \alpha(j,x)-i=0)sg(x)sg(i) \bar{sg}(i+1 \dot{-} l(x))$\\
+    so, the function is computable.\\
+    
+    \item $a(i,x)=\left\{\begin{array}{ll}
+        a_{i} \mbox{ as in (3)}, &\mbox{if } x>0 \mbox{ and } 1\leq i \leq l,\\
+        0& \mbox{otherwise};
+        \end{array}\right.$\\
+    \textbf{Proof:}\\
+    We can see that $x=2^{a_1}(1+2^{a_2+1}(...(1+2^{a_l+1})))$\\
+    Define $g(x)=(\mu y<(x)(div(power(2,y),x)=0) \dot{-} 1)$, $h(x)=qt(power(2,g(x)),x)$\\
+    Define $$F(x,0)=2x+1$$
+    $$F(x,i+1)=h(F(x,i) \dot{-} 1)$$
+    So, $F(x,i\dot{-} 1)=2^{a_1}(1+2^{a_2+1}(...(1+2^{a_l+1})))$,then:
+    $$a(i,x)=g(qt(2,F(x,i \dot{-} 1) \dot{-} 1))sg(x)sg(i)\bar{sg}(i+1 \dot{-} l(x))$$
+    
+    \end{enumerate}
+
+\end{enumerate}
+
+
+%========================================================================
+\end{document}

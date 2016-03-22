@@ -1,0 +1,152 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{multicol}
+
+\theoremstyle{definition}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+%changing 1.5 will give you different space between lines.
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+
+\begin{document}
+
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab04-Church's Thesis}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2016}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class}
+
+\footnotesize{\color{red}$*$ If there is any problem, please contact: nongeek.zv@gmail.com }
+
+\footnotesize{\color{blue}$*$ Name: Zhang Yupeng \quad StudentId: 5130309468 \quad Email: 845113336@qq.com}
+\end{center}
+
+
+\begin{enumerate}%[topsep=0pt, partopsep=0pt, itemsep=2pt,parsep=2pt]
+
+  \item Suggest the natural definition of computability on domain $\mathbb{Q}$ (rational numbers).\\
+\textbf{Solution:}\\
+The computability on domain \mathbb{Q} is that a function $f: \mathbb{Q} \rightarrow \mathbb{Q}$ is computable if there exist a series of computable functions $g_1,g_2...g_n: \mathbb{Q} \rightarrow \mathbb{Q}$ that $f$ is the composition of the functions $g_1...g_n$.\\
+ 
+ \item Define $f(n)$ as the $n$-th digit in the decimal expansion of $e$. Use Church's Thesis to prove that $f$ is computable. ($e$ is the the base of the natural logarithm and can be calculated as the sum of the infinite series: $e = \sum\limits_{n=0}^{\infty}\dfrac{1}{n!}$)\\
+\textbf{Proof:}\\
+We can obtain an informal algorithm for computing $f(n)$ as follows.\\
+Consider the infinite series: $e = \sum_{n=0}^{\infty} \frac{1}{n!} = \sum_{n=0}^{\infty}h_n(say)$\\
+Let $s_k = \sum_{n=0}^{k}h_n$, by elementary theory of infinite series $s_k < e < s_k + 1/10^k$.\\
+Now $s_k$ is rational, so the decimal expansion of$s_k$ can be effecively calculated to any desired number of places using long division.\\
+Thus the effective method of calculation $f(n)$(given a number $n$) can be described as:\\
+Find the first $N \geq n+1 $ such that the decimal expansion $s_N = a_0a_1...a_na_{n+1}...a_N$ does not have all of $a_{n+1}...a_N$ equal to 9.\\
+Then put $f(n) = a(n)$.\\
+To see that this gives the required value, suppose that $a_m \neq 9$ with $n < m \leq N$. Then by the above
+$$s_N < e < s_N+1/10^N \leq s_N +1/10^m$$
+Hence $a_0a_1...a_m... < e < a_0a_1...a_n...a_m+1...$. So the $n^{th}$ decimal place of $e$ is indeed $a_n$.\\
+Thus by Church's Thesis, $f$ is computable.\\
+
+
+\item Suppose there is a two-tape Turing Machine $M$ with alphabet $\Gamma = \{ \triangleright, \triangleleft, \Box, 1 \}$ and state set $Q = \{ q_s, q_1, q_2, q_h \}$. $M$ has the following specifications. Transform $M$ into a single-tape Turing Machine $\widetilde{M}$, and write down the new alphabet and specifications.
+\begin{eqnarray*}
+   \langle q_s,\triangleright,\triangleright  \rangle & \rightarrow & \langle q_1, \triangleright, S, R\rangle \\
+   \langle q_1,\triangleright,\Box \rangle & \rightarrow & \langle q_2, 1, R, R\rangle \\
+   \langle q_2, 1,\Box \rangle & \rightarrow & \langle q_2, 1, R, R\rangle \\
+   \langle q_2, \triangleleft,\Box \rangle & \rightarrow & \langle q_h, \triangleleft, S, S\rangle
+\end{eqnarray*}
+\\
+\textbf{Solution:}\\
+Alphabet  $\Gamma = \{ \triangleright, \triangleleft, \Box, 1 \}$\\
+State set $Q = \{ q_s, q_1, q_2, q_h \}$. \\
+Specification:\\
+\begin{eqnarray*}
+	 & q_s \triangleright R q_1  \\
+	 & q_1 1 R q_1 \\
+	 & q_1 \triangleleft 1 q_2 \\
+	 & q_2 1 R q_2\\
+	 & q_2 \Box \triangleleft q_h
+\end{eqnarray*}
+
+
+
+\item Design a three-tape TM $M$ that computes the function $f(x,y) = x \% y$, where both $m$ and $n$ belong to the natural number set $\mathbb{N}$. The alphabet is $\{1, \Box, \triangleright, \triangleleft\}$, where the input on the first tape is $x+1$ ``1'''s and $y+1$ ``1'''s with a ``$\Box$'' as the separation. Below is the initial configurations for input $(x,y)$. The result is the number of ``1'''s on the output tape with the pattern of $\triangleright 111
+\cdots 111\triangleleft$. First describe your design and then write the specifications of $M$ in the form like $\langle q_S, \triangleright, \triangleright, \triangleright \rangle \rightarrow \langle q_1, \triangleright, \triangleright, R, R, R\rangle$ and explain the transition functions in detail (especially the meaning of each state).
+
+  \begin{tabular}{ll|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+      & \multicolumn{14}{c}{Initial Configurations}\\[5pt]
+      \cline{2-16}
+      Tape 1:& & $\triangleright$ &  1  & 1 & $\cdots$ & 1 & 1 & $\Box$ & 1 & 1 & $\cdots$ & 1 & 1 & $ \triangleleft$ & \\
+      \cline{2-16}
+      \multicolumn{2}{c}{} & \multicolumn{1}{c}{$\uparrow$} & \multicolumn{5}{c}{\color{blue}$\leftarrow x+1 \mbox{ squares}\rightarrow$} & \multicolumn{1}{c}{} & \multicolumn{5}{c}{\color{blue}$\leftarrow y+1 \mbox{ squares}\rightarrow$} & \multicolumn{2}{c}{}\\[4pt]
+      \cline{2-16}
+      Tape 2:& & $\triangleright$ & $\Box$ & $\Box$ & \multicolumn{7}{c|}{$\cdots$ \quad $\cdots$ \quad $\cdots$} & $\Box$ & $\Box$ & $\Box$ &\\
+      \cline{2-16}
+      \multicolumn{2}{c}{} & \multicolumn{1}{c}{$\uparrow$} & \multicolumn{11}{c}{}\\[4pt]
+      \cline{2-16}
+      Tape 3:& & $\triangleright$ & $\Box$ & $\Box$ & \multicolumn{7}{c|}{$\cdots$ \quad $\cdots$ \quad $\cdots$} & $\Box$ & $\Box$ & $\Box$ &\\
+      \cline{2-16}
+      \multicolumn{2}{c}{} & \multicolumn{1}{c}{$\uparrow$} & \multicolumn{13}{c}{}\\
+      \end{tabular}\\
+      
+\textbf{Solution:}\\
+To realize the function, we fisrt should copy the $x$ and $y$ in the second and third tape;\\
+Then, we scan the second and third tape repeatedly from right to left, when we reach the left side of the third tape, we can set a $\triangleleft$ in the second to show the subtraction of $x - y$.\\
+We repeat this procedure, when we reach the left side of the second tape, we can know the result is the number of 1 between $\triangleright$ and the first $\triangleleft$.\\
+At last, we clear the useless value of the second value and get the result from Tape 2.\\
+
+Alphabet  $\Gamma = \{ \triangleright, \triangleleft, \Box, 1 \}$\\
+State set $Q = \{ q_s, q_1, q_2, q_h \}$. \\
+Specification:\\
+$\langle q_s,\triangleright,\triangleright,\triangleright \rangle  \rightarrow  \langle q_1, \triangleright, \triangleright ,R , R, R \rangle$ Start\\
+$\langle q_1, 1,\Box, \Box \rangle  \rightarrow  \langle q_2, \Box, \Box, R, S, S \rangle$ Skip the first "1"\\
+$\langle q_2, 1,\Box, \Box \rangle  \rightarrow  \langle q_2, 1, \Box, R, R, S \rangle$ Copy x to Tape 2 \\
+$\langle q_2, \Box, \Box, \Box \rangle  \rightarrow  \langle q_3, \triangleleft, \Box, R, S, S \rangle$ Copy x done \\
+$\langle q_3, 1, \triangleleft, \Box \rangle  \rightarrow  \langle q_4, \Box, \Box, R, S, S \rangle$ Skip the first "1" \\
+$\langle q_4, 1,\triangleleft, \Box \rangle  \rightarrow  \langle q_4, \Box, 1, R, S, S \rangle$ Copy y to Tape 3 \\
+$\langle q_4, \triangleleft,\triangleleft, \Box \rangle  \rightarrow  \langle q_5, \triangleleft, \triangleleft, S, L, L \rangle$ Copy y done \\
+$\langle q_5, \triangleleft, 1, 1 \rangle  \rightarrow  \langle q_5, 1, 1, S, L, L \rangle$ Substraction \\
+$\langle q_5, \triangleleft, 1, \triangleright \rangle  \rightarrow  \langle q_6, \triangleleft, \triangleright, S, S, R \rangle$  x > y \\
+$\langle q_6, \triangleleft, \triangleleft, 1 \rangle  \rightarrow  \langle q_6, \triangleleft, 1, S, S, R \rangle$ Back to the right side of Tape 3 \\
+$\langle q_6, \triangleleft, \triangleleft, \triangleleft \rangle  \rightarrow  \langle q_5, \triangleleft, \triangleleft, S, L, L \rangle$ \\ Continue substraction
+$\langle q_5, \triangleleft, \triangleright, 1 \rangle  \rightarrow  \langle q_7, \triangleright, 1, S, R, S \rangle$  x < y \\
+$\langle q_5, \triangleleft, \triangleright, \triangleright \rangle  \rightarrow  \langle q_8, \triangleright, \triangleright, S, R, R \rangle$  x mod y = 0\\
+$\langle q_7, \triangleleft, 1, 1 \rangle  \rightarrow  \langle q_7, 1, 1, S, R, S \rangle$  Back to the first $\triangleleft$ of Tape 2 \\
+$\langle q_7, \triangleleft, \triangleright, 1 \rangle  \rightarrow  \langle q_9, \triangleleft, 1, S, R, S \rangle$  Back to the first $\triangleleft$ of Tape 2 \\
+$\langle q_8, \triangleleft, 1, 1 \rangle  \rightarrow  \langle q_9, \triangleleft, 1, S, R, S \rangle$  Answer is 0 \\
+$\langle q_9, \triangleleft, 1, 1 \rangle  \rightarrow  \langle q_9, \Box, 1, S, R, S \rangle$  Clear useless value \\
+$\langle q_9, \triangleleft, \triangleleft, 1 \rangle  \rightarrow  \langle q_9, \Box, 1, S, R, S \rangle$  Clear useless value \\
+$\langle q_9, \triangleleft, \Box, 1 \rangle  \rightarrow  \langle q_h, \Box, 1, S, S, S \rangle$  Completed! \\
+
+
+\end{enumerate}
+
+
+%========================================================================
+\end{document}
