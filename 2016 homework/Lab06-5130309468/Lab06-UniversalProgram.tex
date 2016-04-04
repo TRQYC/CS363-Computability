@@ -1,0 +1,155 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{multicol}
+
+\theoremstyle{definition}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+%changing 1.5 will give you different space between lines.
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+
+\begin{document}
+
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab06-Universal Program}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2016}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class}
+
+\footnotesize{\color{red}$*$ If there is any problem, please contact: nongeek.zv@gmail.com }
+
+\footnotesize{\color{blue}$*$ Name: Yupeng Zhang \quad StudentId:  5130309468 \quad Email: 845113336@qq.com}
+\end{center}
+
+
+\begin{enumerate}%[topsep=0pt, partopsep=0pt, itemsep=2pt,parsep=2pt]
+
+\item
+\begin{enumerate}
+\item Show that there is a decidable predicate $Q(x,y,z)$ such that
+\begin{enumerate}
+\item $y\in E_x$ if and only if $\exists z.Q(x,y,z)$
+\item if $y\in E_x$ and $Q(x,y,z)$, then $\phi_x((z)_1)=y$.
+\end{enumerate}
+
+\textbf{Solution:}
+
+Let $Q(x,y,z) =S(x,(z)_1,y,(z)_2)$, and $z=2^{(z)_1}3^{(z)_2}$. Assume that $p =(z)_1,q=(z)_2$, $\phi_x(p) \downarrow y$ in $q$ steps. 
+
+If $y \in E_x$, there exist $p,q$ satify $z=2^p3^q$, so there exist $z$ that makes $Q(x,y,z)$ true, which in turn can make sure $y \in E_x$.
+
+Then if $y \in E_x$ and there exists such $z$ so that $Q(x, y, z)$ holds, then according to the definition that $z = 2^p3^q$, we have $\phi_x((z)_1) = \phi_x(p) = y$. 
+
+\item Deduce that there is a computable function $g(x,y)$ such that
+\begin{enumerate}
+\item $g(x,y)$ is defined if and only if $y\in E_x$.
+\item if $y\in E_x$, then $g(x,y)\in W_x$ and $\phi_x(g(x,y))=y$; i.e. $g(x,y)\in \phi^{-1}_x(\{y\})$.
+\end{enumerate}
+
+\textbf{Solution:}
+
+$g(x, y) = \mu z (Q(x,y,z))_1$
+
+If $g(x,y)$ is defined, then exist $z, Q(x,y,z)$ is true, which implies $y \in E_x$. According to the conclusion before, the other direction is also clear.
+
+Then if $y \in E_x$, then there exist $z, Q(x, y, z)$ which means $g(x, y) = (z)_1 ∈ W_x$ and $\phi_x(g(x, y)) = y$.
+
+
+
+
+\item Deduce that if $f$ is a computable injective function (not necessarily total or surjective) then $f^{-1}$ is computable. (cf. exercise 2-5.4(1)).
+
+\textbf{Solution:}
+
+By the s-m-n theory there is a total computable function $k$ such that $g(x,y) = \phi_{k(x)}(y)$, then we have:
+
+$W_{k(x)}=E_x$
+
+$E_{k(x)} \subseteq W_x $ and if $y \in E_x$, then $\phi_x(\phi_{k(x)}(y)) = y$
+
+Hence, if $\phi_x$ is injective, then $\phi_{k(x)}=\phi^{-1}$ and $E_{k(x)} = W_x$, so the $f^{-1}$ is computable.
+
+\end{enumerate}
+
+
+
+
+\item (cf. example 3-7.1(b)) Suppose that $f$ and $g$ are unary computable functions; assuming that $T_1$ has been formally proved to be decidable, prove formally that the function $h(x)$ defined by \\
+    $h(x)=\left\{\begin{array}{ll}
+    1& \mbox{if } x\in Dom(f) \mbox{ or } x\in Dom(g),\\
+    \uparrow & \mbox{otherwise},
+    \end{array}\right.$ is computable.
+
+\textbf{Solution:}
+
+Let $f = \phi_m, g = \phi_n$. Then $h(x) = \textbf{1}(\mu t(H_1(m,x,t) or H_1(n,x,t)))$.
+
+\item Show that there is a total computable function $k(e_1, e_2)$ such that $\phi_{k(e_1,e_2)}(x)$ is the characteristic function for predicate ``$M_1(x)$ and $M_2(x)$", where $M_1$ and $M_2$ are both decidable predicate and $\phi_{e_1}=c_{M_1}$,  $\phi_{e_2}=c_{M_2}$.
+
+\textbf{Solution:}
+
+$f(e_1,e_2,x)=sg(\phi_{e_1}(x)+\phi_{e_2}(x)−1)=sg(\psi(e_1,x)+\psi(e_2,x)-1)$.
+
+Obiviously, $f(e_1,e_2,x)$ is the characteristic function for predicate $M_1(x)$ and $M_2(x)$.
+
+According to the s-m-n theorem, there exists a total computable function $k(e_1,e_2)$ such that $\phi_{k(e1,e2)}(x) = f(e_1, e_2, x)$.
+
+\item Show that there is a total computable function $s(x,y)$ such that for all $x,y$, $E_{s(x,y)}=W_x \cup E_y$.
+
+\textbf{Solution:}
+
+Let $f(x,y,z) =  \begin{cases} \pi_1(z)-1 & ,\pi_1(z) - 1 \in W_x, \pi_2(z)=0 \\ 
+p &, \pi_1(z) = 0, \phi_{y}(\pi_2(z)-1) \downarrow p \\undefined &, otherwise\\
+\end{cases}$
+According to the above definition, for all $x, y, E_{s(x,y)} = W_x \cup E_y$.
+ 
+According Church’s Thesis, $f(x,y,z)$ is a computable function. 
+
+According to s-m-n Theorem, there is a total computable function $s(x, y)$ such that $\phi_{s(x,y)}(z) = f(x, y, z)$.
+
+
+\item Suppose that $f(x)$ is computable; show that there is a total computable function $k(x)$ such that for all $x$, $W_{k(x)}=f^{-1}(W_x)$.
+
+\textbf{Solution:}
+
+$ \psi(x, y) = \begin{cases}  1 &, f(y) \in W_x \\ undefined &, otherwise \\ \end{cases}$.
+
+According to the s-m-n theorem, there is a total computable function $k(x)$ that $\phi_{k(x)}(y) = f(x,y)$. So the domain of $\phi_{k(x)}(y)$ is $f^{-1}(W_x)$.
+
+\end{enumerate}
+
+
+
+%========================================================================
+\end{document}
