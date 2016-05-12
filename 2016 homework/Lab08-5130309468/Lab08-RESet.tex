@@ -1,0 +1,172 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{ mathrsfs }
+%\usepackage{float}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+\theoremstyle{definition}
+
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab08-Recursively Enumerable Set}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2016}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class}
+
+\footnotesize{\color{red}$*$ If there is any problem, please contact: steinsgate@sjtu.edu.cn}
+
+\footnotesize{\color{blue}$*$ Name: Yupeng Zhang \quad StudentId: 5130309468     \quad Email: 845113336@qq.com}
+\end{center}
+
+\begin{enumerate}
+\item Let $A,B$ be subsets of $\mathbb{N}$. Define sets $A\oplus B$ and $A\otimes B$ by
+$$
+\begin{array}{l}
+A\oplus B=\{2x \mid x\in A\}\cup\{2x+1 \mid x\in B\},\\[3pt]
+A\otimes B=\{\pi (x,y) \mid x\in A \mbox{ and } y\in B\},
+\end{array}$$
+where $\pi$ is the pairing function $\pi(x,y)=2^x(2y+1)-1$. Prove that
+  \begin{enumerate}
+  \item $A\oplus B$ is recursive iff $A$ and $B$ are both recursive.
+  
+  \textbf{Proof:}
+  
+  First, we proof $\Rightarrow$:
+  
+  If $A \oplus B$ is recursive, then the characteristic function $c_{A \oplus B}(x)$ is computable. Then $c_A(x) = c_{A \oplus B}(2x)$ and $c_B(x) = c_{A \oplus B}(2x+1)$ are both computable, so A and B are both recursive.
+  
+  Then, we proof $\Leftarrow$:
+  
+  If A and B are both recursive, so $c_A(x)$ and $c_B(x)$ are both computable. 
+  
+  So, $c_{A \oplus B}(x) = sg(c_A(qt(2,x))sg(div(2,x))+c_B(qt(2,x-1)) \bar{sg}(div(2,x)))$ is computable, thus $A \oplus B$ is recursive.
+  
+  
+  
+  \item If $A,B\neq\varnothing$, then $A\otimes B$ is recursive iff $A$ and $B$ are both recursive.
+  
+  \textbf{Proof:}
+  
+  First, we proof $\Rightarrow$:
+  
+  If $A \otimes B$ is recursive, then $c_{A \otimes B}(x)$ is computable. Because $A,B\neq\varnothing$, so we assume $a \in A$, $b \in B$.
+  
+  So, $c_A(x) = c_{A \otimes B}(\pi(x,b))$ and $c_B(x) = c_{A \otimes B}(\pi(a,x))$ are both computable, thus A,B is recursive.
+  
+  Then, we proof $\Leftarrow$:
+  
+  If A and B are both recursive, so $c_A(x)$ and $c_B(x)$ are both computable.
+  
+  So, $c_{A \otimes B}(x) = c_A(\pi_1(x))c_B(\pi_2(x))$ is computable, thus $A \otimes B$ is recursive.
+  
+  \end{enumerate}
+
+\item Which of the following sets are recursive? Which are r.e.? Which have r.e.~complement? Prove your judgements.
+  \begin{enumerate}
+  \item $\{x \mid P_m(x) \downarrow \mbox{ in } t \mbox{ or fewer steps }\}$ ($m,t$ are fixed).
+  
+  \textbf{Solution:}
+  
+  It is recursive, r.e. and has r.e. complement.
+  
+    The set's characteristic function is $H(m,x,t)$, it is computable. So, the set is recursive. The complement set of a recursive set is still recursive, so the set is r.e. complement.
+  
+  \item $\{x \mid x \mbox{ is a power of 2}\}$;
+    
+  \textbf{Solution:}
+  
+  It is recursive, r.e. and has r.e. complement.
+  
+  The set's characteristic function is:
+$c(x)=\begin{cases}1 &,x=0 \\ sg(x-(\mu z<x(2^z=x))) &,x \neq 0 \\ \end{cases}$
+
+It's computable, so the set is recursive, r.e. and r.e. complement.
+  
+  \item $\{x \mid \phi_x \mbox{ is injective}\}$;
+    
+  \textbf{Solution:}
+  
+It has r.e. complement.
+The set is not r.e. Let $ \mathscr{B}=\{f|f \in \mathscr{C}$ and $f$ is injective $\}$. According to Rice theorem, “$\phi_x$ is injective is not decidable. So it is not r.e..
+Then the complement of the set is $A = \{x | \phi_x$ is not injective$\}$. $A$ is r.e. because $x \in A$ iff $\exists y \exists z, y \neq z$ but $\phi_x(y) = \phi_x(z)$, which means “$\phi_x$ is not injective” is partially decidable.
+  
+  
+  
+  \item $\{x \mid y\in E_x\}$ ($y$ is fixed);
+    
+  \textbf{Solution:}
+  
+  It's not recursive, it's r.e and it doesn't has r.e. complement.
+  
+    According to the Kleene Normal Form Theorem. $x \in W_e \leftrightarrow  \exists z.T(e, x, z)$, and $\phi_e(x) = (\mu z(T(e, x, z)))_1$. 
+    Then define $c(x) = sg(\mu z(T (x, (z)_1, (z)_2) \wedge ((z)_2)_1 = y) + 1)$. $c(x)$ is the partial characteristic function of $y \in E_x$. Therefore, the set is r.e..By Rice’s Theorem, the set is not recursive. And then by complementation theorem, it does not have r.e. complement.
+  
+  
+  \end{enumerate}
+
+\item Prove following statements.
+\begin{enumerate}
+\item Let $B\subseteq\mathbb{N}$ and $n>1$; prove that $B$ is r.e. then the predicate $M(x_1,\ldots,x_n)$ given by ``$M(x_1,\ldots,x_n)\equiv2^{x_1}3^{x_2}\ldots p_n^{x_n}\in B$" is partially decidable.
+
+\textbf{Proof:}
+
+Because B is r.e. then its partial characteristic function $\chi_B$ is computable. So, the partial characteristic function of $M$ is $\chi(x) = \chi (2^{x_1} 3^{x_2} . . . p^{x_n} )$ is computable. So, $M$ is partially decidable.
+
+\item Prove that $A\subseteq\mathbb{N}^n$ is r.e. iff $\{2^{x_1}3^{x_2}\ldots p_n^{x_n} \mid (x_1,\ldots,x_n)\in A\}$ is r.e..
+
+\textbf{Proof:}
+
+First, we proof $\Rightarrow$:
+
+If $A \subseteq \mathbb{N}^n$ is r.e.. Then its partial characteristic function $\chi_A(\bf{x})$ is computable. So, the set's partial characteristic function $\chi_S(x) = c_A(2^{(x)_1}3^{(x)_2}...P_n^{(x)_n})$ is computable. So the set is r.e..
+
+Then, we proof $\Leftarrow$:
+
+If the set is r.e.. Then its partial characteristic function $c_S(x)$ is computable. So,$\chi_A(\bf{x})$ = $\chi_S(2^{x_1}3^{x_2}...P_n^{x_n})$ is computable, so $A \subseteq \mathbb{N}^n$ is r.e..
+
+
+\end{enumerate}
+
+
+
+\end{enumerate}
+
+\end{document}
