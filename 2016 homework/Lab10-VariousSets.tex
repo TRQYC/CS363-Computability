@@ -1,0 +1,160 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{mathrsfs}
+%\usepackage{float}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+\theoremstyle{definition}
+
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab10-Various Sets}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2016}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class}
+
+\footnotesize{\color{red}$*$ If there is any problem, please contact: steinsgate@sjtu.edu.cn}
+
+\footnotesize{\color{blue}$*$ Name: Yupeng Zhang \quad StudentId: 5130309468 \quad Email: 845113336@qq.com}
+\end{center}
+
+\begin{enumerate}
+
+\item Prove the following statements.
+\begin{enumerate}
+\item If $B$ is r.e.~and $A\cap B$ is productive, then $A$ is productive.
+
+\textbf{Proof:}
+
+First, we claim there exists a total computable function $k$ such that $ \forall x,W_{k(x)} = W_x \cap B$.
+
+Since $B$ is r.e., by the s-m-n theorem there exists $k$ that:
+
+$$\phi_{k(x)}(y) = \begin{cases} \phi_x(y) &, y \in B \\
+ \mbox{undefined} &,\mbox{otherwise} \\
+ \end{cases}
+$$
+
+Let $f$ be a productive function for $A \cap B$. We claim $g = f \circ k$ is productive for A.
+
+Since $g$ is total computable, and given $W_x \subseteq A, W_{k(x)} \subseteq A \cap B$, so:
+
+ $$g(x)= f (k(x)) \in A \cap B − W_{k(x)} = A \cap B − W_x \cap B \subseteq A − W_x$$
+ So A is productive.
+
+\item If $C$ is creative and $A$ is an r.e.~set such that $A\cap C=\varnothing$, then $C\cup A$ is creative.
+
+\textbf{Proof:}
+
+Since A and C are r.e., $A \cup C$ is r.e.
+We claim that $\overline{A \cup C} = \overline{A} \cap \overline{C}$ is productive. 
+
+Then, we fix a total computable function $k$ such that $\forall x, W_{k(x)} = W_x \cup A$, and let $f$ be a productive function for $\overline{C}$.
+
+We claim that $g = f \circ k$ is productive for $\overline{A} \cap \overline{C}$. $g$ is total computable, and given $W_x \subseteq \overline{A} \cap \overline{C}$, $W_{k(x)} \subseteq \overline{C}$, so:
+$$g(x) = f(k(x)) \in \overline{C} - W_{k (x )} = \overline{C} - W_x \cup A \subseteq \overline{A} \cap \overline{C} - W_x$$
+
+Thus $\overline{A} \cap \overline{C}$ is productive, and so $A \cup C$ is creative.
+
+\end{enumerate}
+
+\item Let $\mathscr{B}$ be a set of unary computable functions, and suppose that $g\in\mathscr{B}$ is such that for all finite $\theta\subseteq g$, $\theta\notin\mathscr{B}$. Prove that the set $\{x \mid \phi_x\in\mathscr{B}\}$ is productive. 
+
+
+\textbf{Proof:}
+
+According to the s-m-n theorem, there exists $k$ such that:
+ $$\forall x, \phi_{k(x)}(y) = \begin{cases} g(y) &,  \neg H_1(x,x,y) \\
+ \mbox{undefined} &, \mbox{otherwise} \\
+ \end{cases}$$
+If $x \in \overline{K}$, then $\phi_{k(x)} = g \in \mathscr{B}$, and if $x \notin K$, then $\phi_{k(x)} \subseteq g$ is finite, hence $\phi_{k(x)} \notin B$. 
+
+So, the set $\{x \mid \phi_x\in\mathscr{B}\}$ is productive.
+
+\item If $A\oplus B=\{2x \mid x\in A\}\cup\{2x+1 \mid x\in B\}$, $A\otimes B=\{\pi (x,y) \mid x\in A \mbox{ and } y\in B\}$, prove the following statements.
+
+\begin{enumerate}
+  \item Suppose $B$ is r.e. If $A$ is creative, then so are $A\oplus B$ and $A\otimes B$ (provided $B\neq\varnothing$).
+  
+  \textbf{Proof:}
+  
+  It is obvious that $\{2x | x \in A\}$ is creative and $\{2x+1 | x \in B\}$ is r.e..
+  
+  Then, from exercise 1.b),$A \oplus B$ is creative.
+  Because $B \neq \varnothing$, we can find $b \in B$. Then, $x \in \overline{A}$ iff $\pi(x,b) \in A \otimes B$, so, $\overline{A \otimes B}$ is productive. So we can easily prove that $A \otimes B$ is r.e..
+   
+In all, $A \otimes B$ is creative.
+  
+  \item If $B$ is recursive, then the implications in (a) reverse.
+  
+    \textbf{Proof:}
+  
+  We define $f(x) = \mu z((2z \geq x) \wedge (2z \in \overline{A \oplus B}))$. $f(x)$ is total and computable, so we have $x \in \overline{A \oplus B}$ iff $f(x) \in \overline{A}$. According to the reduction theorem, $\overline{A}$ is productive means that A is creative.
+  
+  We define $f(x) = \pi_1(\mu z((z \geq x) \wedge (\pi_2(z) \in B)))$. $f(x)$ is total and computable since B is recursive, so, $x \in \overline{A \otimes B}$ iff $f(x) \in \overline{A}$. So, A is creative.
+  
+  \item If $A,B$ are simple sets, prove that $A \otimes B$ is not simple but that $\overline{\overline{A}\otimes \overline{B}}$ is simple.
+  
+  \textbf{Proof:}
+  
+\begin{enumerate}
+
+\item $A \otimes B$ is not simple.
+
+We have $x \in \overline{A \otimes B} \Leftrightarrow \pi_1(x) \notin A$ or $pi_2(x) \notin B$.
+$\overline{B}$ is infinite, so we can find some $b \notin B$. Then we have $\pi(N, b) \subseteq A \otimes B$.
+Because $\pi(N, b)$ is r.e., so that $A \otimes B$ is not simple.
+
+\item $\overline{\overline{A}\otimes \overline{B}}$ is simple.
+
+$\overline{\overline{A}\otimes \overline{B}} = \{\pi(x, y) | x \in A \mbox{ or } y \in B\}$ is r.e., and $\overline{A}\otimes \overline{B}$ is infinite.
+
+We suppose that there is an r.e. set $C \subseteq \overline{A}\otimes \overline{B}$. 
+
+Then, because $x \in \overline{A} \otimes \overline{B} \Leftrightarrow \pi_1(x) \in \overline{A}$ and $\pi_2(x) \in \overline{B}$. We have that $ \pi_1(C) \subseteq \overline{A}$ and $ \pi_2(C) \subseteq \overline{B}$ and $\pi_1(C)$ and $\pi_2(C)$ are both r.e., which contradicts that A and B are simple.
+
+So, $\overline{\overline{A}\otimes \overline{B}}$ is simple.
+  
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,138 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[usenames]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{mathrsfs}
+%\usepackage{float}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+\theoremstyle{definition}
+
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab12-Turing Degree}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2016}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class}
+
+\footnotesize{\color{red}$*$ If there is any problem, please contact: steinsgate@sjtu.edu.cn}
+
+\footnotesize{\color{blue}$*$ Name:Yupeng Zhang \quad StudentId: 5130309468 \quad Email: 845113336@qq.com}
+\end{center}
+
+\begin{enumerate}
+  \item A \emph{dominating set} for a graph $G=(V,E)$ is a subset $D$ of $V$ such that every vertex not in $D$ is adjacent to at least one vertex in $D$. The domination number $\gamma(G)$ is the number of vertices in a smallest dominating set for $G$. The \emph{Dominating Set} (DS) problem concerns finding a minimum $\gamma(G)$ for a given graph $G$.
+
+    Prove that: SET-COVER$\equiv_p$ DOMINATING-SET. 
+    
+    \textbf{Proof:}
+    
+    We first prove DOMINATING-SET $\leq_p $ SET-COVER.
+    
+Given an instance of DOMINATING-SET problem, $G = (V,E)$, for every vertex $v$ in $G$, we construct its corresponding set $S_v = \{u|(u, v) \in E\} \cup \{v\}$, and for the SET-COVER problem, the universal set $U = V$ , and the collection of sets is $S =\{S_{v_1} , S_{v_2} , . . . , S_{v_n} \}$.
+    
+In this way, we have shown a polynomial algorithm $f$ to create an instance of SET-COVER problem from an arbitrary instance of DOMINATING-SET problem.
+ Suppose $\{v_{1′},v_{2′},...,v_{t′}\}$ is a dominating set of $G$, with size no larger than k, then we claim that sub-collection ${S_{v_1′} , S_{v_2′} , . . . , S_{v_t′} }$ is a feasible cover for $f(G)$, and with size no larger than $k$ and given a cover with size no larger than $k$, the set of all corresponding vertices is a feasible dominating set, and with size no larger than $k$.
+ 
+So given $k \geq 0$, dominating set(G) $\leq k \Leftrightarrow $ set cover(f(G)) $\leq k$.
+
+Then, we prove SET-COVER $\leq_p$ DOMINATING-SET. 
+
+Given an instance of SET-COVER problem $x$ with universal set $U$ and collection of sets $S$. We create one vertex for every element in $U$ and every set in $S$. Then we create an edge between the corresponding vertex of an set and the vertices of its elements. We create edges between every pair of sets’ corresponding vertices. In this way, we construct an instance of DOMINATING-SET $f(x)$, we can prove that given arbitrary $k \geq 0$, we have dominating set(x) $\leq k \Leftrightarrow $ set cover(f(x)) $\leq k$.
+
+So, SET-COVER$\equiv_p$ DOMINATING-SET.
+
+\item Let $A$, $B$, $C$, be sets. Prove that
+\begin{enumerate}
+\item If $A$ is $B$-recursive and $B$ is $C$-recursive, then $A$ is $C$-recursive.
+
+\textbf{Solution:}
+
+Obviously, $c_A$ is $c_B$-computable and $c_B$ is $c_C$-computable, so $c_A$ is $c_C$-computable, so $A$ is $C$-recursive.
+
+\item If $A$ is $B$-r.e.~and $B$ is $C$-recursive, then $A$ is $C$-r.e.
+
+\textbf{Solution:}
+
+We assume that the partial characteristic function of $A$ is $f$. Obviously, $f$ is $c_B$-computable and $c_B$ is $c_C$-computable. So $f$ is $c_C$-computable, so $A$ is $C$-r.e.
+ 
+\item If $A$ is $B$-recursive and $B$ is $C$-r.e., then $A$ is not necessarily $C$-r.e.
+
+\textbf{Solution:}
+
+Given the counter example that set $A = \overline{K} , B = K , C = \varnothing $ and we can see that $A$ is not necessarily $C$-r.e.
+\end{enumerate}
+
+  \item Let $A$, $B$ be any sets.
+    \begin{enumerate}
+    \item Show that $A\leq_T B$ iff $K^A\leq_m K^B$, and $A\equiv_T B$ iff $K^A\equiv_m K^B$.
+    
+    \textbf{Proof:}
+    
+    Because $A \leq_T B$, so $c_A$ is $c_B$-computable. Since that $K^A$ is $A$-r.e., so $K^A$ is $B$-r.e.. So we can simplify this by proving $B$ is $A$-r.e. iff $B \leq_m K^A$.
+    
+    If $B$ is $A$-r.e., by the relativized s-m-n theorem there exists a total computable function $k(x)$ such that:
+     $$\forall x,\phi^A_{k(x)}(y)=c^{∗}_{B}(x)$$
+     
+    If $x \in B, \phi^A_{k(x)} = \mathbf{1}$, so $k(x) \in K^A$; 
+        If $x \notin B, \phi^A_{k(x)} = \varnothing$, so $k(x) \notin  K^A$.
+    
+     Thus $k : B \leq_m K^A$.
+     
+     Therefore, $A\leq_T B$ iff $K^A\leq_m K^B$, and based on the conclusion above, it's easy to prove that $A\equiv_T B$ iff $K^A\equiv_m K^B$.
+    
+    
+    \item Show that the previous question can be made effective in the following sense: there is a total computable function $f$ such that if $c_A=\phi_e^B$, then $\phi_{f(e)}:K^A\leq_m K^B$. (\emph{Hint}. Find total computable functions $g$, $h$ such that (1) if $c_A=\phi_e^B$ then $K^A=W_{g(e)}^B$, (2) $\phi_{h(e)}:W_e^B\leq_mK^B$ for all $e$.) \label{Kfunction}
+    
+        \textbf{Proof:}
+    
+Since $c_A = \phi^B_e$ , so $A$ is $B$-recursive and we have $K^A$ is $A$-r.e., thus $K^A$ is $B$-r.e.. So we can see that there exists a total computable function $g$ that $K^A = W^B_{g(e)}$.
+As we have proved that for any set $A$ that is $B$-r.e., $A \leq_m K^B$, so for all $e, \phi_{h(e)} : W_e^B \leq_m K^B$. So there is a total computable function $h \circ g$ such that $h \circ g : K^A \leq_m K^B$.
+
+    \end{enumerate}
+    
+
+    
+	\item Given an ascending sequence of Turing degrees:
+\begin{equation*}
+\mathbf{b_0}< \mathbf{b_1} < \dots < \mathbf{b_n} < \mathbf{b_{n+1}} <\dots
+\end{equation*}
+  Prove that no such ascending sequence of Turing degrees has a least upper bound.
+\end{enumerate}
+\end{document}

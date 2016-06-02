@@ -1,0 +1,180 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{mathrsfs}
+%\usepackage{float}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+\theoremstyle{definition}
+
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab11-Reducibility}}\vspace{1mm}\\
+CS363-Computability Theory, Xiaofeng Gao, Spring 2016}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to FTP or submit a paper version on the next class}
+
+\footnotesize{\color{red}$*$ If there is any problem, please contact: steinsgate@sjtu.edu.cn}
+
+\footnotesize{\color{blue}$*$ Name: Yupeng Zhang \quad StudentId: 5130309468 \quad Email: 845113336@qq.com}
+\end{center}
+\begin{enumerate}
+  \item   Recall that $A\otimes B=\{\pi (a,b) \mid a\in A, b\in B\}$. Prove the following statements.
+\begin{enumerate}
+    \item For any sets $A$, $B$, if $B\neq \varnothing$ then $A\leq_m A\otimes B$.
+    
+    \textbf{Proof:}
+       
+    Because $B \neq \varnothing$, so we have the total computable function $f(x) = \pi(x,b)$ where $b \in B$.
+    
+    So we have $x \in A$ iff $f(x) \in  A \otimes B$. Therefore, we have $A \leq_m A \otimes B$.
+    
+    \item $A\equiv_m A\otimes \mathbb{N}$ for any set $A$,
+    
+        
+    \textbf{Proof:}
+    
+    According to (a), we have $A \leq_m A \otimes N$.  Then, we have the function $f(x) = \pi_1(x)$, and we have $x \in A \otimes N$ iff $f(x) \in A$. Thus we have $A \otimes N \leq_m A$. 
+    
+    Therefore, $A \equiv_m A \otimes N$.
+    
+    
+    \item $A\equiv_m A\otimes B$ if $A\neq \mathbb{N}$ and $B$ is a non-empty recursive set.
+        
+    \textbf{Proof:}
+    
+    According to (a), we have $A \leq_m A \otimes B$. Then we define a total computable function:
+    $$f(x) = \begin{cases} \pi_1(x) &,\pi_2 \notin B\\
+            k &, \mbox{otherwise}\\
+ \end{cases} , k \notin A$$
+ So, we have $x \in A \otimes N$ iff $f(x) \in A$.Thus we have $A \otimes N \leq_m A$. 
+ 
+ Therefore, $A \equiv_m A \otimes B$.
+    
+    
+  \end{enumerate}
+
+  \item Let $\mathbf{a}$, $\mathbf{b}$ be m-degrees.
+  \begin{enumerate}
+  \item Show that the least upper bound of $\mathbf{a}$, $\mathbf{b}$ is uniquely determined; denote this by $\mathbf{a}\cup\mathbf{b}$;
+  
+  \textbf{Proof:}
+  
+  According to the theorem, any pair of m-degrees $\mathbf{a}$, $\mathbf{b}$ have a least upper bound. If $\mathbf{c}$, $\mathbf{d}$ are both least upper bounds, then $\mathbf{c} \leq_m \mathbf{d}$ and $\mathbf{d} \leq_m \mathbf{c}$, so $\mathbf{c} = \mathbf{d}$.
+  
+    \item Show that if $\mathbf{a}\leq_m\mathbf{b}$ then $\mathbf{a}\cup\mathbf{b}=\mathbf{b}$;
+    
+    \textbf{Proof:}
+    
+    According to the definition, $\mathbf{b} \leq_m \mathbf{a} \cup \mathbf{b}$. So $\mathbf{b}$ is an upper bound of $\mathbf{a}$ and $\mathbf{b}$. So, $\mathbf{a} \cup \mathbf{b} \leq_m \mathbf{b}$. So, $\mathbf{c} = \mathbf{d}$.
+    
+    \item Show that if $\mathbf{a}$,$\mathbf{b}$ are r.e., then so is $\mathbf{a}\cup\mathbf{b}$;
+    
+    \textbf{Proof:}
+    
+    Pick $A \in \mathbf{a}$, $B \in \mathbf{b}$, and because $\mathbf{a}$ and $\mathbf{b}$ are both r.e.. So, $A$ and $B$ are both r.e.. So, their direct sum is still r.e.. By the proof of Theorem 2.8 in the textbook, $\mathbf{a} \cup \mathbf{b}$ is r.e..
+    
+    \item Let $A\in \mathbf{a}$ and let $\mathbf{a}^{*}$ denote $d_m(\overline{A})$. (Check that $\mathbf{a}^{*}$ is independent of the choice of $A\in \mathbf{a}$.) Show that $(\mathbf{a}\cup\mathbf{a}^{*})^{*}=\mathbf{a}\cup\mathbf{a}^{*}$.
+    
+    \textbf{Proof:}
+    
+    We assume that $\mathbf{b} = \mathbf{a} \cup \mathbf{a}^*$.
+    
+    We first claim that $\mathbf{b}^*$ is an upper bound for $\mathbf{a}$ and  $\mathbf{a}^*$, so $\mathbf{b} \leq_m \mathbf{b}^*$.
+    
+    Then, for $X \in \mathbf{b}^*, \overline{X} \in \mathbf{b}$ by definition. So for $Y \in \mathbf{a}, \overline{Y} \in \mathbf{a}^* \leq_m \mathbf{b}$, so $\overline{Y} \leq_m \overline{X}$ and $Y \leq_m X$. So, $\mathbf{a} \leq_m \mathbf{b}^*, \mathbf{a}^* \leq_m \mathbf{b}^*$, so $\mathbf{b} \leq_m \mathbf{b}^*$.
+    
+    Because $\mathbf{b}^*$ is well-defined, so $\mathbf{b}^* \leq_m (\mathbf{b}^*)^* = \mathbf{b}$, so $\mathbf{b} = \mathbf{b}^*$.   
+
+  \end{enumerate}
+
+\item Show that the following sets all belong to the same m-degree:
+\begin{enumerate}
+\item $\{x \mid \phi_x=0\}$,
+\item $\{x \mid \phi_x \mbox{ is total and constant}\}$,
+\item $\{x \mid W_x \mbox{ is infinite}\}$.
+\end{enumerate}
+
+\textbf{Proof:}
+
+First, we proof $(a) \leq_m (b)$.
+
+According the s-m-n theorem, there exists a total computable function k such
+that:
+
+$$\forall x, \phi_{k(x)}(y) = y \sum_{z=0}^{y}\phi_x(z)$$
+If $\phi_x = 0$, then $\phi_{k(x)} = 0$, so $\phi_{k(x)}$ is total and constant.
+
+If $\phi_x \neq 0$, then either $\phi_x$ is total or it is not. If $\phi_x$ is not total, then neither is $\phi_{k(x)}$. If $\phi_x$ is total, choose y such that $\phi_x(y) >0$. Then:
+$$\phi_{k(x)}(y+1) = (y+1)\sum_{z=0}^{y+1}\phi_x(z) \geq (y+1)\sum_{z=0}^{y}\phi_x(z) \geq \phi_{k(x)}(y) + \phi_x(y) > \phi_{k(x)}(y)$$
+
+So, $\phi_{k(x)}$ is not constant, so $(a) \leq_m (b)$.
+
+Then, we proof $(b) \leq_m (c)$.
+
+According the s-m-n theorem there exists a total computable function s such that:
+$$ \forall x, \phi_{s(x)}(0) = \phi_x(0), \phi_{s(x)}(y+1) = \begin{cases} \phi_x(y+1) &, \phi_{s(x)}(y) \mbox{ is defined and } \phi_x(y+1) = \phi_{s(x)}(y) \\ \uparrow &, \mbox{otherwise} \\ \end{cases} $$
+
+If $\phi_x$ is total and constant, then $\phi_{s(x)} = \phi_x$, so $W_{s(x)} = \mathbb{N}$ is infinite.
+
+If $\phi_x$ is not total, then there exists y such that $\phi_x(y)$ is undefined; by construction then, $\phi_{s(x)}(z)$ is undefined
+for all $z \geq y$, so $W_{s(x)}$ is finite.
+
+If $\phi_x$ is total but not constant, then there exists a least $y>0$ such that $\phi_x(y) \neq \phi_x(0)$; by construction again, $\phi_{s(x)}(z)$ is undefined for all $z \geq y$, so $W_{s(x)}$ is finite.
+
+So, $(b) \leq_m (c)$.
+
+Finally, we proof $(c) \leq_m (a)$.
+
+According to the s-m-n theorem there exists a total computable function u such that:
+$$ \forall x, \phi_{u(x)} = \mathbf{0}(\mu t(\bigvee_{i=0}^{t}H_1(x,y+i,t)))$$
+
+If $W_x$ is infinite, then for any y there exists $z \geq y$ such that $\phi_x(z)$ is defined, so $\phi_{u(x)}(y)=0$. Since y was arbitrary, $\phi_{u(x)} = 0$.
+
+If $W_x$ is finite, there exists some y such that for all $z \geq y$, $\phi_{u(x)}(y)$ is undefined and $\phi_{u(x)} \neq 0$.
+
+So, $(c) \leq_m (a)$.
+
+Since $(a) \leq_m (b) \leq_m (c) \leq_m (a)$, so these sets all belong to the same m-degree.
+
+
+\end{enumerate}
+
+\end{document}
